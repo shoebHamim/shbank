@@ -13,7 +13,6 @@
 </head>
 
 <body>
-
     <div id="login-area">
         <h1 class="text-center"> Welcome To SHBank</h1>
         <div class="submit-area">
@@ -25,17 +24,97 @@
 
     </div>
     <div id="transaction-area">
-        <h1>transaction-area</h1>
+
+        <div class="row">
+            <div class="col-md-4 ">
+                <div class="deposit status">
+                    <h5>Deposit</h5>
+                    <h2>$ <span id="current_deposit">00</span></h2>
+                </div>
+
+            </div>
+            <div class="col-md-4 ">
+                <div class="withdraw status">
+                    <h5>Withdraw</h5>
+                    <h2>$ <span id="current_withdraw">00</span></h2>
+                </div>
+            </div>
+            <div class="col-md-4 ">
+                <div class="balance status">
+                    <h5>Balance</h5>
+                    <h2>$ <span id="current_balance">00</span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="submit-area">
+                    <h4>Deposit</h4>
+                    <input id="deposit_amount" placeholder="$ amount you want to deposit" class="form-control" type="text">
+                    <br><button id="deposit" class="btn btn-success">Deposit</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="submit-area">
+                    <h4>Withdraw</h4>
+                    <input id='withdraw_amount' placeholder="$ amount you want to withdraw" class="form-control" type="text">
+                    <br><button id="withdraw" class="btn btn-success">Withdraw</button>
+                </div>
+            </div>
+        </div>
 
     </div>
     <script>
-        const loginbtn=document.getElementById('login-button');
-        loginbtn.addEventListener('click',function(){
-            const login_area=document.getElementById('login-area');
-            login_area.style.display='none';
-            const transactionArea=document.getElementById('transaction-area');
-            transactionArea.style.display='block';
+        const loginbtn = document.getElementById('login-button');
+        loginbtn.addEventListener('click', function () {
+            const login_area = document.getElementById('login-area');
+            login_area.style.display = 'none';
+            const transactionArea = document.getElementById('transaction-area');
+            transactionArea.style.display = 'block';
         })
+
+        const deposit=document.getElementById('deposit');
+        deposit.addEventListener('click',function(){
+            var deposit_amount=document.getElementById('deposit_amount').value;
+            if(deposit_amount==''){
+                deposit_amount=0;
+            }
+            const deposit_number=parseFloat(deposit_amount);
+            const current_deposit=document.getElementById('current_deposit').innerText;
+            const current_deposit_number=parseFloat(current_deposit);
+            const current_balance=document.getElementById('current_balance').innerText;
+            const current_balance_number=parseFloat(current_balance);
+            // const total_deposit=current_deposit_number+deposit_number;
+            // console.log(total_deposit);
+            document.getElementById('current_deposit').innerText=current_deposit_number+deposit_number;
+            document.getElementById('current_balance').innerText=current_balance_number+deposit_number;
+            document.getElementById('deposit_amount').value='';
+        });
+        const withdraw_clicked=document.getElementById('withdraw');
+        withdraw_clicked.addEventListener('click',function(){
+            var withdraw_amount=document.getElementById('withdraw_amount').value;
+            if(withdraw_amount==''){
+                withdraw_amount=0;
+            }
+            
+            const withdraw_amount_number=parseFloat(withdraw_amount);
+            const current_withdraw=document.getElementById('current_withdraw').innerText;
+            const current_withdraw_number=parseFloat(current_withdraw);
+            const current_balance=document.getElementById('current_balance').innerText;
+            const current_balance_number=parseFloat(current_balance);
+            if(current_balance_number<withdraw_amount_number){
+               alert('Not Enough Balance');
+               document.getElementById('withdraw_amount').value='';
+               return;
+            }
+            document.getElementById('current_balance').innerText=current_balance_number-withdraw_amount_number;
+            document.getElementById('current_withdraw').innerText=current_withdraw_number+withdraw_amount_number;
+            document.getElementById('withdraw_amount').value='';
+            
+        });
+
+
+            
 
     </script>
 </body>
